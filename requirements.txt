@@ -17,3 +17,6 @@ typing-extensions==4.2.0
 zipp==3.8.0
 
 dvc[s3] ~= 2.10.2
+
+pre-commit ~= 2.19.0
+commitizen ~= 2.27.1
