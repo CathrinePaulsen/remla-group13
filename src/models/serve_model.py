@@ -32,8 +32,8 @@ def index_post():
     if not title:
         return render_template('index.html')
 
-    predicted_tags  = predict(title)
-    data = [f"Title: {title}", f"Tags: {predicted_tags}"]
+    predicted_tags  = predict(title)[0]
+    data = [f"Title: {title}", f"Tags: {', '.join(predicted_tags)}"]
 
     return render_template('index.html', data=data)
 
@@ -48,15 +48,18 @@ def predict(title):
 
     with open(ROOT_DIR / 'models/tfidf.pkl', 'rb') as file:
         model = pickle.load(file)
-    prediction = model.predict(processed_title)[0]
+    prediction = model.predict(processed_title)
+
+    with open(ROOT_DIR / 'models/mlb.pkl', 'rb') as file:
+        mlb = pickle.load(file)
+    tags = mlb.inverse_transform(prediction)
+
     # global statement is used to keep track of predictions, this is the simplest solution
     # pylint: disable=global-statement
     global NUM_PRED
     NUM_PRED = NUM_PRED + 1  # Increment number of total predictions made
 
-    # TODO: Convert preediction: binary array -> list of tags as strings ?
-
-    return prediction
+    return tags
 
 
 @app.route('/predict', methods=['POST'])
@@ -87,10 +90,10 @@ def predict_post():
     input_data = request.get_json()
     title = input_data.get('title')
 
-    prediction = predict(title)
+    tags = predict(title)
 
     return jsonify({
-        "result": prediction.tolist(),
+        "result": tags,
         "classifier": "tfifd multi-label-binarizer ",
         "title": title
     })
