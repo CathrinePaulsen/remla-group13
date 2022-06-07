@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=$0
-COLOR=${1,,}  # Convert input to lowercase
+COLOR=$(echo "$1" | tr '[:upper:]' '[:lower:]')  # Convert input to lowercase
 
 DEPLOYMENT_FILE=k8s/$COLOR-deployment.yml
 USAGE=$(cat <<-END

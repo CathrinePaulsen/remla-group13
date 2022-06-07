@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=$0
-COLOR=${1,,}  # Convert input to lowercase
+COLOR=$(echo "$1" | tr '[:upper:]' '[:lower:]')  # Convert input to lowercase
 TAG=$2
 
 IMAGE=ghcr.io/cathrinepaulsen/remla-group13
@@ -31,7 +31,8 @@ if [ "$#" -eq 1 ]; then
 
 elif [ "$#" -eq 2 ]; then
 	echo "Deploying version $TAG to file $DEPLOYMENT_FILE..."
-	sed -i "s?${IMAGE}:.*?${IMAGE}:${TAG}?g" $DEPLOYMENT_FILE
+	sed -i.bak "s?${IMAGE}:.*?${IMAGE}:${TAG}?g" $DEPLOYMENT_FILE
+    rm $DEPLOYMENT_FILE.bak  # Clean up temporary file used by sed
 fi
 
 kubectl apply -f $DEPLOYMENT_FILE
