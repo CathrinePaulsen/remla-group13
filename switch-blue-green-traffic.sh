@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=$0
-COLOR=${1,,}  # Convert input to lowercase
+COLOR=$(echo "$1" | tr '[:upper:]' '[:lower:]')  # Convert input to lowercase
 
 SERVICE_FILE=k8s/services.yml
 COLOR_SELECTOR=color: 
@@ -26,7 +26,8 @@ esac
 
 echo "Routing all traffic of $SERVICE_FILE to deployment $COLOR..."
 
-sed -i "s?${COLOR_SELECTOR}.*?${COLOR_SELECTOR} ${COLOR}?g" $SERVICE_FILE
+sed -i.bak "s?${COLOR_SELECTOR}.*?${COLOR_SELECTOR} ${COLOR}?g" $SERVICE_FILE
 kubectl apply -f $SERVICE_FILE
+rm $SERVICE_FILE.bak  # Clean up temporary file used by sed
 
 echo "Done."
