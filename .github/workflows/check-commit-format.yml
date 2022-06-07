@@ -23,9 +23,3 @@ jobs:
     - name: Run commitizen check
       run: |
         cz check --rev-range origin/main..HEAD
-        
-    - name: Extract tag name
-      run: |
-        TAG_NAME=${GITHUB_REF:11}
-        echo "__version__=$TAG_NAME" >> _version.py
-        echo "tag_name=$TAG_NAME" >> $GITHUB_ENV
