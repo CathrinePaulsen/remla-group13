@@ -44,26 +44,26 @@ stages:
       size: 3981
     outs:
     - path: data/derivates/cleaned_train_dataset_properties.pkl
-      md5: 29c600e89cf8129ebc8b7a75dbad48f4
-      size: 114384
+      md5: 4d1de2e079f8e5e7e75b52b6f3776492
+      size: 148642
     - path: data/derivates/tfidf_vocab.pkl
-      md5: 4539842f91487ff205c66a58442b5913
-      size: 304689
+      md5: 67fa2d4355b02c7fb5a4959fb0023191
+      size: 944747
     - path: data/processed/test.pkl
-      md5: b0a79cca2675fe19fec0a1764102c1d9
-      size: 1652795
+      md5: 01b60bf00679071e48f7b464aa6806b3
+      size: 1652812
     - path: data/processed/train.pkl
-      md5: 12637bc042c74154cc176d3d859478e7
-      size: 10530934
+      md5: 4eeb9276d03bfa527dde6dad7260f008
+      size: 12255703
     - path: data/processed/validation.pkl
-      md5: 1734eac77597b34ad2568063b62174bd
-      size: 3103689
+      md5: 601a1309a4bbce06de7e6e50f87d3b26
+      size: 3622479
   train_model:
     cmd: python -m src.models.train_model
     deps:
     - path: data/processed/train.pkl
-      md5: 12637bc042c74154cc176d3d859478e7
-      size: 10530934
+      md5: 4eeb9276d03bfa527dde6dad7260f008
+      size: 12255703
     - path: src/config/definitions.py
       md5: 5744b597d0c60b1b49653dc10d643c28
       size: 142
@@ -72,11 +72,11 @@ stages:
       size: 1498
     outs:
     - path: models/mlb.pkl
-      md5: 7eb3a94349cd226ac41a7c769be5b3ea
-      size: 1880
+      md5: 0c2048b24c371900e0cc7185e05a996b
+      size: 2311
     - path: models/tfidf.pkl
-      md5: 69e2d7be80fb1ba7b881df4d03a87e43
-      size: 14666653
+      md5: 85c5d91035dee968c41b1aa42ce373f2
+      size: 14675265
   data_validation:
     cmd: pytest tests/test_data_validation.py
     deps:
