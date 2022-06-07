@@ -9,18 +9,20 @@ from flasgger import Swagger
 
 from src.config.definitions import ROOT_DIR
 from src.features.build_features import text_prepare
+from _version import __version__
 
 app = Flask(__name__)
 swagger = Swagger(app)
 
 NUM_PRED = 0
+version = __version__
 
 @app.route('/', methods=['GET'])
 def index_get():
     """
     Show a landing page to the user.
     """
-    return render_template('index.html')
+    return render_template('index.html', version=version)
 
 @app.route('/', methods=['POST'])
 def index_post():
