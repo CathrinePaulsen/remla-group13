@@ -1,5 +1,5 @@
 from setuptools import find_packages, setup
-from version import __version__
+from _version import __version__
 
 linter_requires = [
     'pylint==2.12.2',
@@ -9,8 +9,6 @@ linter_requires = [
 tests_requires = [
     'pytest==7.1.2'
 ]
-
-exec(open("remla-group13/version.py").read())
 
 setup(
     name='src',
