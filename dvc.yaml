@@ -15,6 +15,7 @@ stages:
     - data/processed/validation.pkl
     - data/derivates/cleaned_train_dataset_properties.pkl
     - data/derivates/tfidf_vocab.pkl
+    - data/derivates/tfidf_vectorizer.pkl
   data_validation:
     cmd: pytest tests/test_data_validation.py
     deps:
