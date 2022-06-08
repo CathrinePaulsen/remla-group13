@@ -34,12 +34,12 @@ def index_post():
     title = request.form['text']
 
     if not title:
-        return render_template('index.html')
+        return render_template('index.html', version=VERSION)
 
     predicted_tags = predict(title)[0]
     data = [f"Title: {title}", f"Tags: {', '.join(predicted_tags)}"]
 
-    return render_template('index.html', data=data)
+    return render_template('index.html', data=data, version=VERSION)
 
 
 def predict(title):
