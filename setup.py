@@ -1,5 +1,5 @@
 from setuptools import find_packages, setup
-from version import __version__
+from __version import __version__
 
 linter_requires = [
     'pylint==2.12.2',
