@@ -4,7 +4,7 @@ Flask API of the SMS Spam detection model model.
 
 import pickle
 import random
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, render_template
 from flasgger import Swagger
 
 from src.config.definitions import ROOT_DIR
@@ -15,8 +15,55 @@ swagger = Swagger(app)
 
 NUM_PRED = 0
 
+@app.route('/', methods=['GET'])
+def index_get():
+    """
+    Show a landing page to the user.
+    """
+    return render_template('index.html')
+
+@app.route('/', methods=['POST'])
+def index_post():
+    """
+    Show the predicted tags from user input.
+    """
+    title = request.form['text']
+
+    if not title:
+        return render_template('index.html')
+
+    predicted_tags  = predict(title)[0]
+    data = [f"Title: {title}", f"Tags: {', '.join(predicted_tags)}"]
+
+    return render_template('index.html', data=data)
+
+
+def predict(title):
+    """
+    Function that returns the predicted tags of the given title.
+    Used in the endpoints.
+    """
+    prepared_title = text_prepare(title) # remove bad symbols
+    processed_title = tfidf_vectorizer.transform([prepared_title])
+
+    with open(ROOT_DIR / 'models/tfidf.pkl', 'rb') as file:
+        model = pickle.load(file)
+    prediction = model.predict(processed_title)
+
+    with open(ROOT_DIR / 'models/mlb.pkl', 'rb') as file:
+        mlb = pickle.load(file)
+    tags = mlb.inverse_transform(prediction)
+
+    # global statement is used to keep track of predictions, this is the simplest solution
+    # pylint: disable=global-statement
+    global NUM_PRED
+    NUM_PRED = NUM_PRED + 1  # Increment number of total predictions made
+
+    return tags
+
+
 @app.route('/predict', methods=['POST'])
-def predict():
+def predict_post():
     """
     Predict the tag belonging to the title of a post of StackOverflow.
     ---
@@ -43,21 +90,7 @@ def predict():
     input_data = request.get_json()
     title = input_data.get('title')
 
-    prepared_title = text_prepare(title) # remove bad symbols
-    processed_title = tfidf_vectorizer.transform([prepared_title])
-
-    with open(ROOT_DIR / 'models/tfidf.pkl', 'rb') as file:
-        model = pickle.load(file)
-    prediction = model.predict(processed_title)
-
-    with open(ROOT_DIR / 'models/mlb.pkl', 'rb') as file:
-        mlb = pickle.load(file)
-    tags = mlb.inverse_transform(prediction)
-
-    # global statement is used to keep track of predictions, this is the simplest solution
-    # pylint: disable=global-statement
-    global NUM_PRED
-    NUM_PRED = NUM_PRED + 1  # Increment number of total predictions made
+    tags = predict(title)
 
     return jsonify({
         "result": tags,

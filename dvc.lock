@@ -46,6 +46,9 @@ stages:
     - path: data/derivates/cleaned_train_dataset_properties.pkl
       md5: 29c600e89cf8129ebc8b7a75dbad48f4
       size: 114384
+    - path: data/derivates/tfidf_vectorizer.pkl
+      md5: 4676f254668c64a79ef5fecd161d1a2c
+      size: 5381481
     - path: data/derivates/tfidf_vocab.pkl
       md5: 4539842f91487ff205c66a58442b5913
       size: 304689

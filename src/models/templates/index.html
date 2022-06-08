@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REMLA app by Group 13</title>
+</head>
+<body>
+    <h1>REMLA app by Group 13</h1>
+    <form method="POST">
+	    <input name="text" placeholder="Enter a title">
+	    <input type="submit" value="Predict tags">
+    </form>
+    {% for text in data %}
+    	<p>{{text}}</p>
+    {% endfor %}
+</body>
+</html>
+
