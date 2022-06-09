@@ -1,0 +1,12 @@
+additionalPrometheusRulesMap:
+  custom-rules:
+    groups:
+    - name: exampletest
+      rules:
+      - alert: UsersUnsatisfied
+        expr: num_pred > 2 and user_satisfaction < 0.5
+        for: 1s
+        labels:
+          severity: critical
+        annotations:
+          summary: hello?
