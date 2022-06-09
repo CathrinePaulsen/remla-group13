@@ -4,7 +4,7 @@ Flask API of the SMS Spam detection model model.
 
 import pickle
 import random
-from flask import Flask, jsonify, request, Response, render_template
+from flask import Flask, jsonify, request, Response, render_template, redirect
 from flasgger import Swagger
 
 from src.config.definitions import ROOT_DIR
@@ -14,6 +14,8 @@ app = Flask(__name__)
 swagger = Swagger(app)
 
 NUM_PRED = 0
+UPVOTES = 0
+DOWNVOTES = 0
 
 @app.route('/', methods=['GET'])
 def index_get():
@@ -99,6 +101,21 @@ def predict_post():
     })
 
 
+@app.route('/vote', methods=['POST'])
+def vote():
+    """
+    Update the number of up and down votes.
+    """
+    if request.form['vote'] == 'yes':
+        global UPVOTES
+        UPVOTES = UPVOTES + 1  # Increment number of total upvotes made
+    elif request.form['vote'] == 'no':
+        global DOWNVOTES
+        DOWNVOTES = DOWNVOTES + 1  # Increment number of total downvotes made
+    return redirect('/')
+    # TODO: render 400 on bad request
+
+
 @app.route('/metrics', methods=['GET'])
 def metrics():
     """
@@ -112,6 +129,14 @@ def metrics():
     string += "# HELP num_pred Number of total predictions made\n"
     string += "# TYPE num_pred counter\n"
     string += "num_pred " + str(NUM_PRED) + "\n\n"
+
+    if UPVOTES == 0:
+        user_satisfaction = None
+    else:
+        user_satisfaction = UPVOTES / (UPVOTES + DOWNVOTES)
+    string += "# HELP user_satisfaction Percentage of up-votes\n"
+    string += "# TYPE user_satisfaction gauge\n"
+    string += "user_satisfaction " + str(user_satisfaction) + "\n\n"
 
     # Note: Prometheus requires mimetype to be explicitly set to text/plain
     return Response(string, mimetype='text/plain')
