@@ -6,13 +6,20 @@
 </head>
 <body>
     <h1>REMLA app by Group 13</h1>
-    <form method="POST">
+    <form action="/" method="POST">
 	    <input name="text" placeholder="Enter a title">
 	    <input type="submit" value="Predict tags">
     </form>
-    {% for text in data %}
-    	<p>{{text}}</p>
-    {% endfor %}
+    {% if data %}
+        {% for text in data %}
+            <p>{{text}}</p>
+        {% endfor %}
+        Are you happy with the predicted tags?
+        <form action="/vote" method="post">
+            <input type="submit" name="vote" value="yes"/>
+            <input type="submit" name="vote" value="no"/>
+        </form>
+    {% endif %}
 </body>
 </html>
 
