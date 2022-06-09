@@ -3,3 +3,23 @@ grafana:
     server:
       root_url: http://localhost:3000/dashboard
       serve_from_sub_path: true
+
+
+alertmanager:
+  config:
+    global:
+    route:
+      group_wait: 1s
+      group_interval: 2s
+      repeat_interval: 1m
+      receiver: 'null'
+      routes:
+      - receiver: 'hellohi'
+        matchers:
+        - alertname="UsersUnsatisfied"
+    receivers:
+    - name: 'null'
+    - name: 'hellohi'
+      webhook_configs:
+      - url: "http://host.minikube.internal:8081/webhook"
+
