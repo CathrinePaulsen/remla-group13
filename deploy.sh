@@ -23,7 +23,9 @@ helm install -f k8s/values.yml promstack prometheus-community/kube-prometheus-st
 
 
 # Create pods, services, and ingress:
-kubectl apply -f k8s/deployment.yml
+kubectl apply -f k8s/blue-deployment.yml
+kubectl apply -f k8s/services.yml
+kubectl apply -f k8s/ingress.yml
 
 
 # Quick way to get the ip:port / urls you need to access the API

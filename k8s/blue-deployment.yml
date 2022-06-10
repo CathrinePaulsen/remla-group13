@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remla-app-blue
+spec:
+  replicas: 1 # Add more replicas to enable load-balancing
+  selector:
+    matchLabels:
+      app: remla-app
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: remla-app
+        color: blue
+    spec:
+      containers:
+      - name: remla-app
+        image: ghcr.io/cathrinepaulsen/remla-group13:alert-actor
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
