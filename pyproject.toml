@@ -3,5 +3,6 @@ name = "cz_conventional_commits"
 version = "0.2.4"
 tag_format = "v$version"
 version_files = [
-    "src/version.py"
+    "src/version.py",
+    "k8s/blue-deployment.yml"
 ]
