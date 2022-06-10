@@ -3,5 +3,5 @@ name = "cz_conventional_commits"
 version = "0.1.0"
 tag_format = "v$version"
 version_files = [
-    "setup.py"
+    "src/version.py"
 ]
