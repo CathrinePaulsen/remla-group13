@@ -7,7 +7,7 @@ import random
 from flask import Flask, jsonify, request, Response, render_template
 from flasgger import Swagger
 
-from __version import __version__
+from src.version import __version__
 from src.config.definitions import ROOT_DIR
 from src.features.build_features import text_prepare
 
