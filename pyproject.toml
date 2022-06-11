@@ -1,7 +1,8 @@
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.0"
+version = "0.2.4"
 tag_format = "v$version"
 version_files = [
-    "setup.py"
+    "src/version.py",
+    "k8s/blue-deployment.yml"
 ]
