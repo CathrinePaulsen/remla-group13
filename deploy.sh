@@ -19,7 +19,7 @@ kubectl cluster-info
 # Install kube-prometheus-stack used for monitoring
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm install -f k8s/values.yml promstack prometheus-community/kube-prometheus-stack
+helm install -f k8s/values.yml -f k8s/alert-rules.yml promstack prometheus-community/kube-prometheus-stack
 
 
 # Create pods, services, and ingress:
