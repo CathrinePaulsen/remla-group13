@@ -13,7 +13,7 @@ def webhook():
                 lines = f.read()
                 if "color: blue" in lines:
                     subprocess.call(['bash',
-                                     './switch-blue-green-traffic.sh',
+                                     './switch-traffic.sh',
                                      'green'])
     return "Webhook received!"
 
