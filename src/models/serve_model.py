@@ -14,6 +14,7 @@ app = Flask(__name__)
 swagger = Swagger(app)
 
 NUM_PRED = 0
+NUM_EMPTY = 0
 UPVOTES = 0
 DOWNVOTES = 0
 
@@ -60,6 +61,10 @@ def predict(title):
     # pylint: disable=global-statement
     global NUM_PRED
     NUM_PRED = NUM_PRED + 1  # Increment number of total predictions made
+
+    if not tags[0]:
+        global NUM_EMPTY
+        NUM_EMPTY = NUM_EMPTY + 1
 
     return tags
 
@@ -129,6 +134,14 @@ def metrics():
     string += "# HELP num_pred Number of total predictions made\n"
     string += "# TYPE num_pred counter\n"
     string += "num_pred " + str(NUM_PRED) + "\n\n"
+
+    if NUM_PRED == 0:
+        num_empty = None
+    else:
+        num_empty = NUM_EMPTY / NUM_PRED
+    string += "# HELP percentage_empty Number of predictions that returned no tags\n"
+    string += "# TYPE percentage_empty gauge\n"
+    string += "percentage_empty " + str(num_empty) + "\n\n"
 
     if UPVOTES == 0:
         user_satisfaction = None

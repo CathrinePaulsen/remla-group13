@@ -11,3 +11,11 @@ additionalPrometheusRulesMap:
           rollback: "true"
         annotations:
           summary: Users indicate they are unsatisfied with the current prediction performance.
+      - alert: TooManyEmpty
+        expr: num_pred > 10 and percentage_empty >= 0.1
+        for: 1s
+        labels:
+          severity: critical
+          rollback: "true"
+        annotations:
+          summary: Returning too many undesirable empty responses
