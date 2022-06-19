@@ -8,7 +8,6 @@ Users can then provide feedback on the quality of the predicted tags.
 
 The application is based on the jupyter notebook provided by [luiscruz/remla-baseline-project](https://github.com/luiscruz/remla-baseline-project).
 
-
 ## Setup guide
 The REMLA-app can be deployed in two ways: singular deployment or blue-green deployment.
 #### Deployments requirements:
@@ -38,6 +37,8 @@ Deploys a singular deployment.
 This script will set up a Minikube cluster and deploy only the blue version of REMLA-app.
 The image version used by blue is kept up-to-date in this repository with the latest released image version.
 
+**Note**: When running the script for the first time, you will be prompted to set a password for the Grafana dashboard.
+
 ### `deploy-bg.sh <color> <version>`: 
 Deploys the given color deployment with the given version.
 The script will wait until the deployment is successful, then switch traffic to the newly deployed version.
@@ -66,6 +67,14 @@ You will need the following:
 * The `k8s/` directory. Modify the manifests to point to your own application images.
 * Implement your own Prometheus alert(s). Modify `k8s/alert_rules.yml` and `k8s/values.yml` to match your desired alert(s) configuration.
 
+## Grafana dashboard
+The Grafana dashboard is accessible on `<ingress_ip>/dashboard`.
+
+We provide a custom dashboard that displays our application-specific metrics (`user_satisfaction`, `num_pred`) which is stored in `k8s/grafana-dashboards/metrics_dashboard.json`.
+
+Log in to the Grafana dashboard with username `admin` and the password you set when running `deploy-simple.sh` for the first time.
+
+To import the dashboard go to Create -> Import and copy-paste the json in `k8s/grafana-dashboards/metrics_dashboard.json`.
 
 ## Contributing
 To prepare your local environment for development, install all requirements using `pip install -r requirements.txt`. 
