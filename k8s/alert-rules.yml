@@ -8,5 +8,6 @@ additionalPrometheusRulesMap:
         for: 1s
         labels:
           severity: critical
+          rollback: "true"
         annotations:
           summary: Users indicate they are unsatisfied with the current prediction performance.
