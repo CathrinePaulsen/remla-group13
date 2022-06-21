@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: remla-app
-        image: ghcr.io/cathrinepaulsen/remla-group13:v0.2.5
+        image: ghcr.io/cathrinepaulsen/remla-group13:v0.3.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

@@ -1,3 +1,25 @@
+## v0.3.0 (2022-06-21)
+
+### Feat
+
+- **metrics**: Add alert for slow responses
+- **metrics**: Add alert for empty responses
+- allow any alert to trigger rollback
+- add first working MVP of user_satisfaction automatically triggering traffic switch
+- add first working MVP of user_satisfaction automatically triggering traffic switch
+- implement user satisfaction prompt
+- add user satisfaction metric to prediction page
+
+### Fix
+
+- **alert_actor**: allow alert_actor to switch both ways (blue<=>green)
+- add quotes around string variable
+- handle firing alerts only
+
+### Refactor
+
+- separate Kubernetes manifests into their own files
+
 ## v0.2.5 (2022-06-11)
 
 ### Fix
