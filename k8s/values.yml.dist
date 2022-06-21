@@ -3,7 +3,7 @@ grafana:
     server:
       root_url: http://localhost:3000/dashboard
       serve_from_sub_path: true
-
+  adminPassword: <PLACEHOLDER>
 
 alertmanager:
   config:
@@ -24,4 +24,3 @@ alertmanager:
       webhook_configs:
         # Alert will be forwarded to the endpoint below
       - url: "http://host.minikube.internal:8081/webhook"
-
