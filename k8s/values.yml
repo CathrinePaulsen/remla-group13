@@ -16,7 +16,7 @@ alertmanager:
       routes:
       - receiver: 'alert_actor'
         matchers:
-          # Only alerts matching alertname will be forwarded
+          # Only alerts with rollback="true" will be forwarded
         - rollback="true"
     receivers:
     - name: 'null'
