@@ -47,9 +47,17 @@ elif [ "$#" -ge 2 ]; then
 	rm $DEPLOYMENT_FILE.bak  # Clean up temporary file used by sed
 fi
 
-if [ "$#" -eq 2 ] || [ $NO_DEPLOY != "no-deploy=false" ]; then
-	echo "Deploying $COLOR with image version $TAG..."
+if [ "$#" -eq 2 ] || [ "$NO_DEPLOY" != "no-deploy=false" ]; then
+    echo "Deploying $COLOR with image version $TAG..."
 	kubectl apply -f $DEPLOYMENT_FILE
+
+    echo "Waiting for $COLOR to fully deploy..."
+    while [[ $(kubectl get pods -l color=$COLOR -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
+        sleep 1
+    done
+
+    echo "$COLOR is fully deployed, switching traffic..."
+    ./switch-traffic.sh $COLOR
 fi
 
 echo "Done."

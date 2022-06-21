@@ -1,0 +1,26 @@
+grafana:
+  grafana.ini:
+    server:
+      root_url: http://localhost:3000/dashboard
+      serve_from_sub_path: true
+  adminPassword: <PLACEHOLDER>
+
+alertmanager:
+  config:
+    global:
+    route:
+      group_wait: 1s
+      group_interval: 10s
+      repeat_interval: 1m
+      receiver: 'null'
+      routes:
+      - receiver: 'alert_actor'
+        matchers:
+          # Only alerts with rollback="true" will be forwarded
+        - rollback="true"
+    receivers:
+    - name: 'null'
+    - name: 'alert_actor'
+      webhook_configs:
+        # Alert will be forwarded to the endpoint below
+      - url: "http://host.minikube.internal:8081/webhook"
