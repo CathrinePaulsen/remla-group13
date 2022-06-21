@@ -28,7 +28,7 @@ To deploy two instances ("blue" and "green") of REMLA-app using Minikube:
 * Access the web interface at `<ingress_ip>/`
 
 The automated blue-green deployment will switch traffic to the green deployment.
-Once user satisfaction drops below a certain threshold, a Prometheus alert will fire which will trigger the alert_actor to switch traffic back to the old version.
+Once one of the metrics used in `k8s/alert_rules.yml` drops below their specified thresholds, a Prometheus alert will fire which will trigger the alert_actor to switch traffic back to the old version.
 
 ## Script overview
 Descriptions of the scripts' usage is also found by running `./<script_name> --help`.
@@ -52,7 +52,7 @@ Undeploys/deletes the deployment of the given deployment; used to free up resour
 
 ## The alert_actor
 Listens for specific alerts on `localhost:8081/webhook`. 
-When it receives a “UsersUnsatisfied” alert, it switches traffic to the color deployment that is on stand-by (i.e. not currently running in production).
+When it receives an alert labeled `rollback="true"`, it switches traffic to the color deployment that is on stand-by (i.e. not currently running in production).
 The alert_actor needs access to the Kubernetes manifest containing the service used to access REMLA-app. 
 The given default path is `k8s/services.yml` but a different file path can also be given by running `alert_actor <path_to_service_yml>`.
 

@@ -1,5 +1,5 @@
 from setuptools import find_packages, setup
-
+from src.version import __version__
 
 linter_requires = [
     'pylint==2.12.2',
@@ -13,7 +13,7 @@ tests_requires = [
 setup(
     name='src',
     packages=find_packages(),
-    version='0.1.0',
+    version=__version__,
     extras_require={
         'linter': linter_requires,
         'tests': tests_requires,
