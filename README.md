@@ -65,7 +65,7 @@ You will need the following:
 * Scripts: `deploy-bg.sh` and `switch-traffic.sh`. Modify the variables at the top of the scripts to match your environment. The other scripts may also be used for convenience.
 * The `alert_actor/` directory to enable automatic alert-based switching between blue-green.
 * The `k8s/` directory. Modify the manifests to point to your own application images.
-* Implement your own Prometheus alert(s). Modify `k8s/alert_rules.yml` and `k8s/values.yml` to match your desired alert(s) configuration.
+* Implement your own Prometheus alert(s). Modify `k8s/alert_rules.yml` to match your desired alert(s) configuration and add `rollback: "true"` to the labels of all alerts that should initiate rollbacks.
 
 ## Grafana dashboard
 The Grafana dashboard is accessible on `<ingress_ip>/dashboard`.
