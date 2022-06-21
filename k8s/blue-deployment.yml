@@ -16,7 +16,6 @@ spec:
     spec:
       containers:
       - name: remla-app
-        image: ghcr.io/cathrinepaulsen/remla-group13:demo
         image: ghcr.io/cathrinepaulsen/remla-group13:v0.2.5
         imagePullPolicy: Always
         ports:
