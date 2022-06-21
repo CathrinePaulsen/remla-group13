@@ -27,11 +27,18 @@ kubectl apply -f k8s/blue-deployment.yml
 kubectl apply -f k8s/services.yml
 kubectl apply -f k8s/ingress.yml
 
+# Make sure service always routes traffic to blue
+./switch-traffic.sh blue
+
+
 
 # Quick way to get the ip:port / urls you need to access the API
 minikube service list
 
+# Enable access to the prometheus dashboard on localhost:9090
+# kubectl port-forward prometheus-promstack-kube-prometheus-prometheus-0 9090
+
 # To access the /predict endpoint, simply access the IP of the ingress
-# which is displayed by "minikube service list" with the endpoint appended, 
+# which is displayed by "minikube service list" with the endpoint appended,
 # i.e. <ingress-ip>/predict
 # Available endpoints: /predict, /metrics, /dashboard

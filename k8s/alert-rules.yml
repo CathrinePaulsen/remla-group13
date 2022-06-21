@@ -1,7 +1,7 @@
 additionalPrometheusRulesMap:
   custom-rules:
     groups:
-    - name: exampletest
+    - name: UndesirableDeploymentAlerts
       rules:
       - alert: UsersUnsatisfied
         expr: num_pred > 2 and user_satisfaction < 0.5
@@ -9,4 +9,4 @@ additionalPrometheusRulesMap:
         labels:
           severity: critical
         annotations:
-          summary: hello?
+          summary: Users indicate they are unsatisfied with the current prediction performance.
