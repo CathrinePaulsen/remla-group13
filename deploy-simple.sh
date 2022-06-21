@@ -15,6 +15,15 @@ minikube addons enable ingress
 kubectl cluster-info
 # Run "minikube dashboard" for an in-browser dashboard
 
+# Set Grafana password if running script for the first time
+if [ ! -f k8s/values.yml ]; then
+    echo "INFO: k8s/values.yml does not exist. This is normal if it's your first time running this script, you need to provide a Grafana password first:"
+    read -sp 'Enter Grafana password: ' GRAF_PASS
+    cp k8s/values.yml.dist k8s/values.yml
+	sed -i.bak "s?<PLACEHOLDER>?$GRAF_PASS?g" k8s/values.yml
+    rm k8s/values.yml.bak
+    echo "Grafana password has been set."
+fi
 
 # Install kube-prometheus-stack used for monitoring
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
